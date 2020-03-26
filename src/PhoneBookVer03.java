@@ -1,6 +1,6 @@
 import ver02.PhoneInfo;
 
-public class PhoneBookVer02 {
+public class PhoneBookVer03 {
 
 	public static void main(String[] args) {
 
