@@ -1,30 +1,31 @@
 import java.util.Scanner;
+import ver04.PhoneBookManager;
 
-import ver03.*;
 
-public class PhoneBookVer03 {
+public class PhoneBookVer04 {
 
 	public static void main(String[] args) {
 
-		PhoneBookManager p3 = new PhoneBookManager(100);
+		PhoneBookManager p4 = new PhoneBookManager(100);
 
 		while(true) {
-			p3.printMenu();
+			p4.printMenu();
 			Scanner scan = new Scanner(System.in);
 			int choice = scan.nextInt();
+			scan.nextLine();
 
 			switch(choice) {
 			case 1:
-				p3.dataInput();
+				p4.dataInput();
 				break;
 			case 2:
-				p3.dataSearch();
+				p4.dataSearch();
 				break;
 			case 3:
-				p3.dataDelete();
+				p4.dataDelete();
 				break;
 			case 4:
-				p3.dataAllShow();
+				p4.dataAllShow();
 				break;
 			case 5:
 				System.out.println("프로그램을 종료합니다.");

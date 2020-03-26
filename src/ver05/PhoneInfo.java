@@ -1,4 +1,4 @@
-package ver03;
+package ver05;
 
 import java.util.Scanner;
 
@@ -7,20 +7,12 @@ public class PhoneInfo {
 	//멤버변수
 	String name;
 	String phoneNumber;
-	String birthday;
 
 	//생성자
-	public PhoneInfo(String name, String phoneNumber, String birthday) {
+	public PhoneInfo(String name, String phoneNumber ) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
-		this.birthday = birthday;
-	}
-
-	//생년월일은 필수사항 아니므로 인자가 없는 경우 null로 초기화
-	public PhoneInfo(String name, String phoneNumber) {
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.birthday = null;
+	
 	}
 	
 	public PhoneInfo() {}
@@ -40,8 +32,6 @@ public class PhoneInfo {
 				name = scan.nextLine();
 				System.out.print("전화번호 : ");
 				phoneNumber = scan.nextLine();
-				System.out.print("생일 : ");
-				birthday = scan.nextLine();
 
 				System.out.println();
 				System.out.println("입력된 정보 출력...");
@@ -62,10 +52,5 @@ public class PhoneInfo {
 	public void showPhoneInfo(){
 		System.out.println("이름 : "+name);
 		System.out.println("전화번호 : "+phoneNumber);
-		if(birthday==null) {
-			System.out.println("생년월일 입력되지 않음");
-		}else {
-			System.out.println("생년월일 : "+birthday);
-		}
 	}
 }
