@@ -1,4 +1,4 @@
-package ver06;
+package ver07;
 
 import java.util.Scanner;
 
@@ -12,8 +12,30 @@ public class PhoneInfo {
 	public PhoneInfo(String name, String phoneNumber ) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
-	
 	}
+	
+	@Override
+	public String toString() {
+		return "이름 : "+name+"\n전화번호 : "+phoneNumber;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hc1 = name.hashCode();
+		int hc2 = name.hashCode();
+		int hc3 = name.hashCode();
+		int result = hc1+hc2+hc3;
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		PhoneInfo phoneInfo = (PhoneInfo)obj;
+		if(phoneInfo.name.equals(this.name)) {
+			return true;
+		}else return false;
+	}
+	
 	
 	public PhoneInfo() {}
 

@@ -1,18 +1,15 @@
-package ver06;
+package ver07;
 
 import java.util.*;
 
-
 public class PhoneBookManager {
 
-	private PhoneInfo[] dataArray;
-	int numofArray, choice;
+	HashSet<PhoneInfo> set = new HashSet<PhoneInfo>();
+	int choice;
 
-	public PhoneBookManager(int size) {
-		dataArray = new PhoneInfo[size];
-		numofArray=0;
+	public PhoneBookManager(int i) {
+		// TODO Auto-generated constructor stub
 	}
-
 
 	public void printMenu() throws MenuSelectException{
 
@@ -71,8 +68,7 @@ public class PhoneBookManager {
 		//사용자로부터 친구정보를 입력받기 위한 준비
 		Scanner scan = new Scanner(System.in);
 
-		String name, phoneNumber, major, company;
-		int grade;
+		String name, phoneNumber, major, company, grade;
 		try {
 			System.out.println("데이터 입력을 시작합니다.");
 
@@ -85,31 +81,34 @@ public class PhoneBookManager {
 			if(inputNum == SubMenuItem.NORMAL) {
 				System.out.print("이름 : ");name = scan.nextLine();
 				System.out.print("전화번호 : ");phoneNumber = scan.nextLine();
+				checkDouble(name);
 				System.out.println("데이터 입력이 완료되었습니다.");
 
-				PhoneInfo p3 = new PhoneInfo(name,phoneNumber);
-				dataArray[numofArray++] = p3; 
+				PhoneInfo normal = new PhoneInfo(name,phoneNumber);
+				set.add(normal); 
 			}else if(inputNum == SubMenuItem.SC_FRIEND) {
 				System.out.print("이름 : ");name = scan.nextLine();
+				checkDouble(name);
 				System.out.print("전화번호 : ");phoneNumber = scan.nextLine();
 				System.out.print("전공 : ");major = scan.nextLine();
-				System.out.print("학년 : ");grade = scan.nextInt();
+				System.out.print("학년 : ");grade = scan.nextLine();
 
 				System.out.println("데이터 입력이 완료되었습니다.");
 
 				PhoneSchoolInfo school  = new PhoneSchoolInfo
 						(name,phoneNumber,major,grade);
-				dataArray[numofArray++] = school; 
+				set.add(school);
 			}else if(inputNum == SubMenuItem.COMP_FRIENDS) {
 				System.out.print("이름 : ");name = scan.nextLine();
+				checkDouble(name);
 				System.out.print("전화번호 : ");phoneNumber = scan.nextLine();
 				System.out.print("회사 : ");company = scan.nextLine();
 
 				System.out.println("데이터 입력이 완료되었습니다.");
 
-				PhoneCompanyInfo comp  = new PhoneCompanyInfo
+				PhoneCompanyInfo comp = new PhoneCompanyInfo
 						(name, phoneNumber, company);
-				dataArray[numofArray++] = comp; 
+				set.add(comp);
 			}
 			MenuSelectException menuSelectException
 			= new MenuSelectException();
@@ -128,15 +127,24 @@ public class PhoneBookManager {
 		String searchName = scan.nextLine();
 
 		boolean find=false;
+		boolean searchFlag = false;
 
-		for(int i=0;i<numofArray;i++) {
-
-			if(searchName.compareTo(dataArray[i].name)==00) {
+		Iterator<PhoneInfo> itr = set.iterator();
+		while(itr.hasNext()) {
+			PhoneInfo phoneInfo = itr.next();
+			if(searchName.equals(phoneInfo.name)) {
 				System.out.println("요청하신 정보를 출력합니다.");
-				dataArray[i].showPhoneInfo();
+				searchFlag = true;
+				System.out.println(phoneInfo);
 				find = true;
 			}
 		}
+		if(searchFlag == true) {
+			System.out.println("요청하신 정보를 찾았습니다.");
+		}else {
+			System.out.println("검색결과가 없습니다.");
+		}
+
 		if(find==false) {
 			NullPointerException ex = new NullPointerException();
 			throw ex;
@@ -150,40 +158,47 @@ public class PhoneBookManager {
 		System.out.print("삭제할 이름을 입력하세요 : ");
 		String deleteName = scan.nextLine();
 
-		int deleteIndex = -1;
-
-		for(int i=0;i<numofArray;i++) {
-			if(deleteName.compareTo(dataArray[i].name)==00) {
-				//요소를 삭제하기 위해 참조값을 null로 변경
-				dataArray[i] = null;
-				//삭제된 요소의 인덱스값 저장
-				deleteIndex = i;
-				//전체카운트 변수 -1차감
-				numofArray--;
+		Iterator<PhoneInfo> itr = set.iterator();
+		while(itr.hasNext()) {
+			PhoneInfo phoneInfo = itr.next();
+			if(deleteName.equals(phoneInfo.name)) {
+				itr.remove();
 			}
 		}
-
-		if(deleteIndex==-1) {
-			System.out.println("==삭제된 데이터가 없습니다.==");
-		}
-		else {
-			/*
-			 객체배열에서 검색된 요소를 삭제한 후 입력된 위치의 바로 뒤 요소를
-			 앞으로 하나씩 교환한다
-			 */
-			for(int i=deleteIndex;i<numofArray;i++) {
-				dataArray[i] = dataArray[i+1];
-			}
-		}
-		System.out.println("데이터 삭제가 완료되었습니다.");
 	}
 
 	public void dataAllShow() {
 		System.out.println("주소록전체를 출력합니다.");
-		for(int i=0; i< numofArray ; i++) {
-			dataArray[i].showPhoneInfo();
+		for(PhoneInfo pi : set){
+			System.out.println(pi.toString());
 			System.out.println();
 		}
 		System.out.println("주소록 출력이 완료되었습니다.");
+	}
+
+	public void checkDouble(String name) throws MenuSelectException{
+		Scanner scan = new Scanner(System.in);
+		boolean check = false;
+		int checkNum=0;
+
+		Iterator<PhoneInfo> itr = set.iterator();
+		while(itr.hasNext()) {
+			PhoneInfo phoneInfo = itr.next();
+			if(name.equals(phoneInfo.name)) {
+				check = true;
+			}
+		}
+		if(check==true) {
+			System.out.println("중복된 이름이 존재합니다. 덮어쓰시겠습니까?");
+			System.out.println("1.덮어쓰기   2.메뉴로 돌아가기");
+			checkNum = scan.nextInt();
+			if(checkNum==1) {
+				return;
+			}else if(checkNum==2) {
+				dataInput();
+			}
+		}else {
+			return;
+		}
 	}
 }

@@ -1,8 +1,8 @@
-import ver06.MenuSelectException;
-import ver06.PhoneBookManager;
+import ver07.MenuSelectException;
+import ver07.PhoneBookManager;
 
 
-public class PhoneBookVer06 {
+public class PhoneBookVer07 {
 
 	public static void main(String[] args) throws MenuSelectException {
 
