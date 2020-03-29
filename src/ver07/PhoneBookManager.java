@@ -187,7 +187,7 @@ public class PhoneBookManager {
 			if(name.equals(phoneInfo.name)) {
 				check = true;
 			}
-		}
+		}  
 		if(check==true) {
 			System.out.println("중복된 이름이 존재합니다. 덮어쓰시겠습니까?");
 			System.out.println("1.덮어쓰기   2.메뉴로 돌아가기");
