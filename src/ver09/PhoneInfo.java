@@ -1,0 +1,71 @@
+package ver09;
+
+import java.util.Scanner;
+
+public class PhoneInfo {
+
+	//멤버변수
+	String name;
+	String phoneNumber;
+	String birthday;
+
+	//생성자
+	public PhoneInfo(String name, String phoneNumber, String birthday) {
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+	}
+
+	//생년월일은 필수사항 아니므로 인자가 없는 경우 null로 초기화
+	public PhoneInfo(String name, String phoneNumber) {
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.birthday = null;
+	}
+	
+	public PhoneInfo() {}
+
+	public void Insert() {
+		Scanner scan = new Scanner(System.in);
+		while(true) {
+			System.out.println("선택하세요...");
+			System.out.println("1. 데이터 입력");
+			System.out.println("2. 프로그램 종료");
+			System.out.print("선택 : ");
+			int choice = scan.nextInt();
+			scan.nextLine();
+
+			if(choice==1) {
+				System.out.print("이름 : ");
+				name = scan.nextLine();
+				System.out.print("전화번호 : ");
+				phoneNumber = scan.nextLine();
+				System.out.print("생일 : ");
+				birthday = scan.nextLine();
+
+				System.out.println();
+				System.out.println("입력된 정보 출력...");
+				showPhoneInfo();
+				System.out.println();
+				
+			}else if(choice==2) {
+				System.out.println("프로그램을 종료합니다.");
+				break;
+			}else {
+				System.out.println("잘못 입력하셨습니다.");
+				System.out.println();
+			}
+		}
+	}
+
+	//정보출력용 메소드
+	public void showPhoneInfo(){
+		System.out.println("이름 : "+name);
+		System.out.println("전화번호 : "+phoneNumber);
+		if(birthday==null) {
+			System.out.println("생년월일 입력되지 않음");
+		}else {
+			System.out.println("생년월일 : "+birthday);
+		}
+	}
+}

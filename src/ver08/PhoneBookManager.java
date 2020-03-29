@@ -1,6 +1,7 @@
-package ver07;
+package ver08;
 
 import java.util.*;
+import java.io.*;
 
 public class PhoneBookManager {
 
@@ -13,6 +14,7 @@ public class PhoneBookManager {
 
 	public void printMenu() throws MenuSelectException{
 
+		readPhoneInfo();
 		while(true) {
 			try {
 				System.out.println("선택하세요.");
@@ -50,6 +52,7 @@ public class PhoneBookManager {
 					break;
 				case MenuItem.EXIT:
 					System.out.println("프로그램을 종료합니다.");
+					savePhoneInfo();
 					return;
 				}
 
@@ -197,4 +200,49 @@ public class PhoneBookManager {
 			return;
 		}
 	}
+
+	//주소록을 파일 형태로 저장하기
+	public void savePhoneInfo() {
+
+		try {
+			ObjectOutputStream out = 
+					new ObjectOutputStream(
+							new FileOutputStream
+							("src/ver08/PhoneBook.obj"));
+
+			Iterator<PhoneInfo> itr= set.iterator();
+
+			while (itr.hasNext()) {
+				PhoneInfo phoneInfo = itr.next();
+				out.writeObject(phoneInfo);
+			}
+			out.close();
+
+		} catch (Exception e) {
+			System.out.println("저장실패!");
+			e.printStackTrace();
+		}
+	}
+
+	//주소록 파일을 불러오기
+	public void readPhoneInfo() {
+		try {
+			ObjectInputStream in = 
+					new ObjectInputStream(
+							new FileInputStream
+							("src/ver08/PhoneBook.obj"));
+			Iterator<PhoneInfo> itr = set.iterator();
+
+			while (true) {
+				PhoneInfo phoneInfo =(PhoneInfo)in.readObject();
+				if(phoneInfo==null)break;
+				set.add(phoneInfo);
+			}
+
+			dataAllShow();
+		} catch (Exception e) {
+			//e.printStackTrace();
+		}
+	}
 }
+
