@@ -3,7 +3,6 @@ package ver09;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-
 public class SelectSQL extends ConnectDB {
 
 	//생성자메소드
